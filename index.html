@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Untuk Melinda ♥</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Poppins', 'Segoe UI', sans-serif;
+      background: #fff; /* Background polos di awal */
+      height: 100vh;
+      overflow: hidden;
+      margin: 0;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: background 1.5s ease;
+    }
+    
+    .container {
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      max-width: 500px;
+      width: 90%;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      transition: all 0.5s;
+    }
+    
+    h1 {
+      color: #ff3366;
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 25px;
+      color: #555;
+    }
+    
+    button {
+      padding: 12px 30px;
+      font-size: 18px;
+      background: linear-gradient(45deg, #ff3366, #ff6699);
+      border: none;
+      border-radius: 50px;
+      color: white;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 5px 15px rgba(255, 51, 102, 0.4);
+      position: relative;
+      overflow: hidden;
+      font-weight: bold;
+    }
+    
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(255, 51, 102, 0.6);
+    }
+    
+    button:active {
+      transform: translateY(1px);
+    }
+    
+    button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transition: 0.5s;
+    }
+    
+    button:hover::before {
+      left: 100%;
+    }
+    
+    .love-area {
+      margin-top: 40px;
+      position: relative;
+      height: 350px;
+      display: none;
+      perspective: 1000px;
+    }
+    
+    .main-heart {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto;
+      opacity: 0;
+      transform: scale(0) rotate(0deg);
+      animation: glowHeart 2s ease-in-out forwards;
+      position: relative;
+    }
+    
+    .main-heart svg {
+      width: 100%;
+      height: 100%;
+      fill: #ff3366;
+      filter: drop-shadow(0 0 20px #ff6699);
+    }
+    
+    .text {
+      font-size: 24px;
+      margin-top: 30px;
+      opacity: 0;
+      transition: opacity 1.5s ease-in;
+      color: #d6004c;
+      font-weight: bold;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    }
+    
+    .heart-splash {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      animation: splash 3s ease-out forwards;
+      opacity: 0.9;
+      filter: drop-shadow(0 0 4px #ff99bb);
+    }
+    
+    .heart-splash svg {
+      width: 100%;
+      height: 100%;
+      fill: #ff3366;
+    }
+    
+    .floating-hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0; /* Hidden initially */
+      transition: opacity 1s ease;
+    }
+    
+    .floating-heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      opacity: 0.6;
+      animation: float 10s linear infinite;
+    }
+    
+    .floating-heart svg {
+      width: 100%;
+      height: 100%;
+      fill: #ff3366;
+    }
+    
+    .message-area {
+      margin-top: 20px;
+      opacity: 0;
+      transition: opacity 2s ease-in;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    
+    .message {
+      background: rgba(255, 255, 255, 0.8);
+      padding: 15px;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      transform: translateY(20px);
+      opacity: 0;
+      transition: all 0.5s ease;
+    }
+    
+    .typing {
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 3px solid #ff3366;
+      animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+      margin: 0 auto;
+      display: inline-block;
+    }
+    
+    @keyframes glowHeart {
+      0% {
+        opacity: 0;
+        transform: scale(0) rotate(-45deg);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1.3) rotate(5deg);
+      }
+      75% {
+        transform: scale(0.9) rotate(-5deg);
+      }
+      100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+      }
+    }
+    
+    @keyframes splash {
+      0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(var(--x), var(--y)) scale(0) rotate(var(--r));
+        opacity: 0;
+      }
+    }
+    
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) scale(var(--scale)) rotate(0deg);
+        opacity: var(--opacity);
+      }
+      100% {
+        transform: translateY(-100px) scale(var(--scale)) rotate(360deg);
+        opacity: 0;
+      }
+    }
+    
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        filter: brightness(1);
+      }
+      50% {
+        transform: scale(1.05);
+        filter: brightness(1.2);
+      }
+      100% {
+        transform: scale(1);
+        filter: brightness(1);
+      }
+    }
+    
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+    
+    @keyframes blink-caret {
+      from, to { border-color: transparent }
+      50% { border-color: #ff3366 }
+    }
+    
+    .music-button {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      z-index: 10;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s;
+    }
+    
+    .music-button:hover {
+      transform: scale(1.1);
+    }
+    
+    /* Background hearts animation setup */
+    .bg-hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      opacity: 0;
+      transition: opacity 2s ease;
+      pointer-events: none;
+    }
+    
+    .bg-heart {
+      position: absolute;
+      background: rgba(255, 102, 153, 0.15);
+      border-radius: 50%;
+      animation: heartFloat 15s linear infinite;
+    }
+  </style>
+</head>
+<body>
+  <!-- Background hearts container -->
+  <div class="bg-hearts" id="bgHearts"></div>
+  
+  <!-- Floating hearts for animation -->
+  <div class="floating-hearts" id="floatingHearts"></div>
+  
+  <div class="container" id="container">
+    <div id="intro">
+      <h1>Hai Melinda</h1>
+      <p>Aku punya sesuatu untukmu</p>
+      <button id="showLove">Lihat</button>
+    </div>
+
+    <div class="love-area" id="loveArea">
+      <div class="main-heart" id="mainHeart">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+            2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09
+            C13.09 3.81 14.76 3 16.5 3 
+            19.58 3 22 5.42 22 8.5 
+            c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+      </div>
+      <div class="text" id="loveText"><span class="typing">Pagi cantik</span></div>
+      
+      <div class="message-area" id="messageArea">
+        <div class="message" id="message1">#cidroperson</div>
+        <div class="message" id="message2">#wongliongertiwhat</div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Music button -->
+  <div class="music-button" id="musicButton">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="#ff3366">
+      <path d="M8 5v14l11-7z"/>
+    </svg>
+  </div>
+
+  <script>
+    // Create background bubble hearts
+    function createBackgroundHearts() {
+      const heartsContainer = document.getElementById("bgHearts");
+      const colors = ['#ffb3cc', '#ff99bb', '#ff80aa', '#ff6699', '#ff4d88'];
+      
+      for (let i = 0; i < 25; i++) {
+        const heart = document.createElement("div");
+        heart.classList.add("bg-heart");
+        
+        // Random size
+        const size = Math.random() * 100 + 50;
+        heart.style.width = size + "px";
+        heart.style.height = size + "px";
+        
+        // Random position
+        heart.style.left = (Math.random() * 100) + "%";
+        heart.style.top = (Math.random() * 100) + "%";
+        
+        // Random background
+        heart.style.background = colors[Math.floor(Math.random() * colors.length)];
+        heart.style.opacity = Math.random() * 0.2 + 0.1;
+        
+        // Random animation duration and delay
+        heart.style.animationDuration = (Math.random() * 15 + 15) + "s";
+        heart.style.animationDelay = (Math.random() * 10) + "s";
+        
+        heartsContainer.appendChild(heart);
+      }
+    }
+
+    // Create floating hearts animation
+    function createFloatingHearts() {
+      const heartsContainer = document.getElementById("floatingHearts");
+      
+      for (let i = 0; i < 20; i++) {
+        const heart = document.createElement("div");
+        heart.classList.add("floating-heart");
+        
+        heart.innerHTML = `
+          <svg viewBox="0 0 24 24">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+              2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09
+              C13.09 3.81 14.76 3 16.5 3 
+              19.58 3 22 5.42 22 8.5 
+              c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        `;
+        
+        // Random position
+        const x = Math.random() * window.innerWidth;
+        heart.style.left = x + "px";
+        
+        // Random size
+        const scale = Math.random() * 1.5 + 0.5;
+        heart.style.setProperty("--scale", scale);
+        
+        // Random opacity
+        heart.style.setProperty("--opacity", Math.random() * 0.7 + 0.3);
+        
+        // Random animation duration
+        heart.style.animationDuration = (Math.random() * 15 + 10) + "s";
+        
+        // Random delay
+        heart.style.animationDelay = (Math.random() * 10) + "s";
+        
+        heartsContainer.appendChild(heart);
+      }
+    }
+
+    // Main button click event
+    document.getElementById("showLove").addEventListener("click", function() {
+      // Hide intro, show love area
+      document.getElementById("intro").style.display = "none";
+      const loveArea = document.getElementById("loveArea");
+      const loveText = document.getElementById("loveText");
+      const mainHeart = document.getElementById("mainHeart");
+      const messageArea = document.getElementById("messageArea");
+      const floatingHearts = document.getElementById("floatingHearts");
+      const bgHearts = document.getElementById("bgHearts");
+      
+      // Change background with a gradient
+      document.body.style.background = "linear-gradient(135deg, #ffe6f0 0%, #ffb3cc 100%)";
+      
+      // Show love area
+      loveArea.style.display = "block";
+      
+      // Show floating hearts and background hearts
+      setTimeout(() => {
+        floatingHearts.style.opacity = "1";
+        bgHearts.style.opacity = "1";
+      }, 300);
+      
+      // Add special effects
+      setTimeout(() => {
+        mainHeart.style.opacity = "1";
+        spawnHeartSplash();
+        
+        // Show love text after heart appears
+        setTimeout(() => {
+          loveText.style.opacity = 1;
+          
+          // Show messages with delay
+          setTimeout(() => {
+            messageArea.style.opacity = 1;
+            
+            const messages = document.querySelectorAll('.message');
+            messages.forEach((msg, index) => {
+              setTimeout(() => {
+                msg.style.opacity = 1;
+                msg.style.transform = 'translateY(0)';
+              }, index * 800);
+            });
+            
+            // Start background pulsing animation
+            document.getElementById('container').style.animation = 'pulse 3s infinite';
+            
+          }, 2000);
+          
+        }, 1500);
+        
+        // Create more hearts periodically
+        setInterval(spawnRandomHearts, 3000);
+        
+      }, 500);
+    });
+
+    // Create heart splash animation
+    function spawnHeartSplash() {
+      const loveArea = document.getElementById("loveArea");
+      
+      for (let i = 0; i < 40; i++) {
+        const splash = document.createElement("div");
+        splash.classList.add("heart-splash");
+        
+        splash.innerHTML = `
+          <svg viewBox="0 0 24 24">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+              2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09
+              C13.09 3.81 14.76 3 16.5 3 
+              19.58 3 22 5.42 22 8.5 
+              c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        `;
+        
+        const angle = Math.random() * 360;
+        const radius = Math.random() * 200 + 50;
+        const x = Math.cos(angle * (Math.PI/180)) * radius + "px";
+        const y = Math.sin(angle * (Math.PI/180)) * radius + "px";
+        const rotation = Math.random() * 720 - 360 + "deg";
+        
+        splash.style.left = "50%";
+        splash.style.top = "50%";
+        splash.style.setProperty("--x", x);
+        splash.style.setProperty("--y", y);
+        splash.style.setProperty("--r", rotation);
+        
+        // Random animation duration
+        splash.style.animationDuration = (Math.random() * 1.5 + 1.5) + "s";
+        
+        loveArea.appendChild(splash);
+        
+        // Remove after animation
+        setTimeout(() => splash.remove(), 3000);
+      }
+    }
+
+    // Create random hearts occasionally
+    function spawnRandomHearts() {
+      const loveArea = document.getElementById("loveArea");
+      
+      const numHearts = Math.floor(Math.random() * 5) + 3;
+      
+      for (let i = 0; i < numHearts; i++) {
+        const splash = document.createElement("div");
+        splash.classList.add("heart-splash");
+        
+        splash.innerHTML = `
+          <svg viewBox="0 0 24 24">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+              2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09
+              C13.09 3.81 14.76 3 16.5 3 
+              19.58 3 22 5.42 22 8.5 
+              c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        `;
+        
+        // Random position
+        const startX = Math.random() * 100 - 50;
+        const startY = Math.random() * 100 - 50;
+        
+        const angle = Math.random() * 360;
+        const radius = Math.random() * 150 + 50;
+        const x = Math.cos(angle * (Math.PI/180)) * radius + "px";
+        const y = Math.sin(angle * (Math.PI/180)) * radius + "px";
+        const rotation = Math.random() * 720 - 360 + "deg";
+        
+        splash.style.left = `calc(50% + ${startX}px)`;
+        splash.style.top = `calc(50% + ${startY}px)`;
+        splash.style.setProperty("--x", x);
+        splash.style.setProperty("--y", y);
+        splash.style.setProperty("--r", rotation);
+        
+        // Random size
+        const size = Math.random() * 20 + 10;
+        splash.style.width = size + "px";
+        splash.style.height = size + "px";
+        
+        // Random animation duration
+        splash.style.animationDuration = (Math.random() * 2 + 2) + "s";
+        
+        loveArea.appendChild(splash);
+        
+        // Remove after animation
+        setTimeout(() => splash.remove(), 4000);
+      }
+    }
+
+    // Music button functionality
+    let audio;
+    let isPlaying = false;
+    
+    document.getElementById('musicButton').addEventListener('click', function() {
+      if (!audio) {
+        // You would need to host this file or use a music source that works for you
+        audio = new Audio('https://dl.dropboxusercontent.com/s/qsdav3gcyhvn32o/romantic-music.mp3');
+        audio.loop = true;
+        audio.volume = 0.5;
+      }
+      
+      if (isPlaying) {
+        audio.pause();
+        this.innerHTML = `
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="#ff3366">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        `;
+      } else {
+        audio.play();
+        this.innerHTML = `
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="#ff3366">
+            <path d="M6 6h4v12H6zm8 0h4v12h-4z"/>
+          </svg>
+        `;
+      }
+      
+      isPlaying = !isPlaying;
+    });
+
+    // Initialize on page load
+    window.addEventListener('load', function() {
+      createFloatingHearts();
+      createBackgroundHearts();
+    });
+  </script>
+</body>
+</html>
